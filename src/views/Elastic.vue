@@ -104,3 +104,9 @@ export default {
   }
 }
 </script>
+
+<style>
+.pagination {
+  justify-content: center;
+}
+</style>

@@ -6,6 +6,7 @@ import router from './router'
  * CSS IMPORTS
  */
 import '../node_modules/bootstrap/dist/css/bootstrap.css'
+import '@/assets/styles.css'
 
 /**
  * JS IMPORTS
