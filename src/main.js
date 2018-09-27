@@ -5,7 +5,7 @@ import router from './router'
 /**
  * CSS IMPORTS
  */
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
+import '../node_modules/bootstrap/dist/css/bootstrap.css'
 
 /**
  * JS IMPORTS
@@ -33,6 +33,13 @@ const options = {
 Vue.use(VueProgressBar, options)
 
 Vue.config.productionTip = false
+
+/**
+ * COMPONENTS IMPORTS
+ */
+
+import Paginate from 'vuejs-paginate'
+Vue.component('paginate', Paginate)
 
 export default new Vue({
   router,

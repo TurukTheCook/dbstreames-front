@@ -29,11 +29,20 @@
             </tr>
           </tbody>
         </table>
-        <div class="btn-group">
-          <button type="button" class="btn btn-sm btn-outline-secondary" v-if="page != 1" @click="page = 1; changePage(page)"> << </button>
-          <button type="button" class="btn btn-sm btn-outline-secondary" v-for="pageNumber in pagesNb" v-on:click="changePage(pageNumber)" :disabled="page == pageNumber"> {{pageNumber}} </button>
-          <button type="button" @click="page = pages.length; changePage(page)" v-if="page < pages.length" class="btn btn-sm btn-outline-secondary"> >> </button>
-        </div>
+        <paginate
+          v-model="page"
+          :page-count="pagesTotal"
+          :click-handler="changePage"
+          :prev-text="'Prev'"
+          :next-text="'Next'"
+          :container-class="'pagination'"
+          :page-class="'page-item'"
+          :page-link-class="'page-link'"
+          :prev-class="'page-item'"
+          :prev-link-class="'page-link'"
+          :next-class="'page-item'"
+          :next-link-class="'page-link'">
+        </paginate>
       </div>
     </div>
   </search-fetch>
@@ -42,14 +51,14 @@
 <script>
 // @ is an alias to /src
 // import http from './../helpers/http.js'
-import config from './../config.js'
-import searchFetch from '@/components/searchFetch.js'
-import _ from 'lodash'
+import config from './../config.js';
+import searchFetch from '@/components/searchFetch.js';
+import _ from 'lodash';
 
 export default {
   name: 'ElasticSearch',
   components: {
-    searchFetch
+    searchFetch,
   },
   data() {
     return {
@@ -57,22 +66,17 @@ export default {
       message: 'Something happened...',
       textInput: '',
       oldquery: '',
+      typing: false,
       from: 0,
       size: 3,
-      typing: false,
       page: 1,
-      pages: [],
-      data: null,
+      pagesTotal: 0,
     }
   },
   computed: {
-    pagesNb() {
-      if (this.page < 3) return this.pages.slice(0, 5);
-      else return this.pages.slice(this.page-3, this.page+3);
-    },
     query() {
       if (!this.typing) {
-        this.pages = [];
+        this.pagesTotal = 0;
         this.from = 0;
         this.page = 1;
         this.oldquery = this.textInput;
@@ -91,11 +95,7 @@ export default {
   },
   methods: {
     setData(data) {
-      this.pages = [];
-      let numberOfPages = Math.ceil(data.data.hits.total / this.size);
-      for (let index = 1; index <= numberOfPages; index++) {
-        this.pages.push(index);
-      }
+      this.pagesTotal = Math.ceil(data.data.hits.total / this.size);
     },
     changePage(pageNumber) {
       this.page = pageNumber;

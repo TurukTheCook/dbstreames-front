@@ -6,22 +6,22 @@
     </div>
     <div v-if="success == false" class="alert alert-danger m-0 mb-3 w-100">{{message}}</div>
     <div v-if="success == true" class="alert alert-success m-0 mb-3 w-100">{{message}}</div>
-    <div class="mt-3">
-      <form class="mb-5" @submit.prevent="addUser">
+    <div class="mt-3 row">
+      <form class="mb-5 col-md-8 border border-dark p-3 mx-auto" @submit.prevent="addUser">
         <div class="text-left form-row">
           <h2 class="w-100">Add user :</h2>
-          <div class="form-group col-md-6">
+          <div class="form-group col-12">
             <label for="firstname">First Name</label>
             <input v-model="user.firstname" type="text" class="form-control" id="firstname" placeholder="Enter firstname" required>
           </div>
-          <div class="form-group col-md-6">
+          <div class="form-group col-12">
             <label for="lastname">Last Name</label>
             <input v-model="user.lastname" type="text" class="form-control" id="lastname" placeholder="Enter lastname" required>
           </div>
         </div>
         <button class="btn btn-block btn-info" type="submit" :disabled="calling">Submit</button>
       </form>
-      <form class="mb-5" @submit.prevent="updateUser">
+      <form class="mb-5 col-md-8 border border-dark p-3 mx-auto" @submit.prevent="updateUser">
         <div class="text-left form-row">
           <h2 class="w-100">Update user :</h2>
           <div class="form-group w-100">
@@ -39,7 +39,7 @@
         </div>
         <button class="btn btn-block btn-info" type="submit" :disabled="calling">Submit</button>
       </form>
-      <form class="mb-5" @submit.prevent="deleteUser">
+      <form class="mb-5 col-md-8 border border-dark p-3 mx-auto" @submit.prevent="deleteUser">
         <div class="text-left">
           <h2 class="w-100">Delete user :</h2>
           <div class="form-group">

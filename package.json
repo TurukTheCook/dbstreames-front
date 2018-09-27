@@ -13,7 +13,8 @@
     "lodash": "^4.17.11",
     "vue": "^2.5.17",
     "vue-progressbar": "^0.7.5",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "vuejs-paginate": "^2.0.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.4",
