@@ -1,8 +1,9 @@
 import axios from 'axios'
 import app from './../main'
+import config from './../config'
 
 let http = axios.create({
-	baseURL: "endpoint_url"
+	baseURL: config.baseUrl
 })
 
 http.interceptors.request.use(
