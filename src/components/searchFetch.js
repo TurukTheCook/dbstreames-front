@@ -9,10 +9,7 @@ export default {
     endpoint: {
       type: String,
       required: true,
-    },
-    filter: {
-      type: Object,
-    },
+    }
   },
   data() {
     return {
@@ -20,6 +17,7 @@ export default {
       // See: https://github.com/axios/axios#creating-an-instance
       api: axios.create({ baseURL: this.baseUrl }),
       data: null,
+      users: [],
       error: null,
       loading: false,
     };
@@ -29,7 +27,6 @@ export default {
     // on initial rendering of the component and
     // every time the filter property changes.
     filter: {
-      // immediate: true,
       handler: 'load',
     },
     endpoint: {
@@ -39,29 +36,30 @@ export default {
   methods: {
     // The `query` method will handle
     // different query types for us.
-    async query(type, ...params) {
+    async query(type, endpoint) {
       // If we're currently loading content
       // we don't submit an additional request.
       if (this.loading) return;
 
       this.loading = true;
       try {
-        const response = await this.api[type](...params);
-        this.data = response.data.hits.hits;
+        const response = await this.api[type](endpoint);
+        this.data = response.data;
+        this.users = response.data.hits.hits;
         this.error = null;
-        if (!this.data[0]) {
+        if (!this.users) {
           this.error = "Nothing found..";
         }
-        // this.$emit('success', response);
+        this.$emit('success', response);
       } catch (error) {
         this.data = null;
-        this.error = error.response.data.message;
-        // this.$emit('error', error);
+        this.error = error.response;
+        this.$emit('error', error);
       }
       this.loading = false;
     },
     load() {
-      return this.query('get', this.endpoint, this.filter);
+      return this.query('get', this.endpoint);
     },
   },
   render() {
@@ -70,6 +68,7 @@ export default {
     // via the slot scope.
     return this.$scopedSlots.default({
       data: this.data,
+      users: this.users,
       error: this.error,
       load: this.load,
       loading: this.loading,
